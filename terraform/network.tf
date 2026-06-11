@@ -56,3 +56,48 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
+
+# ----------------------------------------
+# Security Group - firewall do servidor
+# ----------------------------------------
+resource "aws_security_group" "lab" {
+  name        = "lab-sg"
+  description = "Acesso ao servidor de observabilidade"
+  vpc_id      = aws_vpc.lab.id
+
+  ingress {
+    description = "SSH apenas do meu IP"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.my_ip]
+  }
+
+  ingress {
+    description = "Grafana apenas do meu IP"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = [var.my_ip]
+  }
+
+  ingress {
+    description = "App de exemplo aberto ao mundo"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Saida liberada"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "lab-sg"
+  }
+}
