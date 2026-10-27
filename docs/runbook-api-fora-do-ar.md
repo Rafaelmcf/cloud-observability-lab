@@ -67,7 +67,7 @@ O incidente foi deixado aberto de propósito por cerca de 19 horas, então esse 
 
 **Causa raiz:** container parado manualmente (`Exited (0)`).
 
-**Evidências:** `_capturas/fase6-alertas/`
+**Evidências:** `docs/img/` (alerta-condicao-normal, alerta-firing, dashboard-incidente-completo)
 
 ## Prevenção
 
