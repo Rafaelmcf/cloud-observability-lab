@@ -1,0 +1,61 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: helpdesk-api
+      folder: Helpdesk
+      interval: 1m
+      rules:
+        - uid: bg2c1i7bqydq8f
+          title: API Helpdesk fora do ar
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: dg28xtiqi4v0ge
+              model:
+                editorMode: code
+                expr: up{job="helpdesk-api"}
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              queryType: expression
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            description: 'O Prometheus não consegue coletar métricas de helpdesk-container:8000 há mais de 1 minuto. Verificar na EC2 se o container está rodando: sudo docker ps'
+            summary: A API Helpdesk parou de responder ao Prometheus (up = 0).
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: empty

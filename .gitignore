@@ -1,0 +1,26 @@
+# Ambiente virtual e cache do Python
+venv/
+__pycache__/
+*.pyc
+
+# Bancos de dados locais
+*.db
+*.sqlite
+
+# Segredos e chaves
+*.pem
+*.key
+.env
+.env.*
+
+# Terraform (caso seja usado no futuro)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Sistema e editor
+.DS_Store
+.vscode/
+
+# Prints originais: só os escolhidos vão para docs/img
+_capturas/
